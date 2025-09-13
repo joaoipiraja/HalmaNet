@@ -1,0 +1,28 @@
+from __future__ import annotations
+
+# UI e jogo
+TILE: int = 40
+N: int = 16
+BOARD_W, BOARD_H = N * TILE, N * TILE
+CHAT_W = 300
+W, H = BOARD_W + CHAT_W, BOARD_H
+
+# Cores
+GRID_COLOR = (40, 40, 40)
+BG_COLOR = (20, 20, 24)
+SEL_COLOR = (255, 215, 0)
+VALID_SIMPLE = (120, 200, 255)
+VALID_JUMP = (120, 255, 160)
+CAMP_A_COLOR = (60, 60, 120)
+CAMP_B_COLOR = (120, 60, 60)
+TEXT_COLOR = (230, 230, 230)
+MUTED_TEXT = (170, 170, 170)
+PANEL_BG = (28, 30, 36)
+PANEL_ACCENT = (48, 50, 58)
+INPUT_BG = (18, 18, 22)
+P1_COLOR = (70, 170, 255)
+P2_COLOR = (255, 110, 110)
+
+# Rede/estado
+HEARTBEAT_SECONDS: int = 10
+MAX_CHAT_HISTORY: int = 200
