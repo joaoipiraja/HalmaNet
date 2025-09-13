@@ -49,7 +49,7 @@ python -m HalmaNet --client --host 0.0.0.0 --port 5007
 python -m HalmaNet --client --host 0.0.0.0 --port 5007
 ```
 
-> Substitua `127.0.0.1` pelo IP do servidor se estiver em máquinas diferentes.
+> Substitua `0.0.0.0` pelo IP do servidor se estiver em máquinas diferentes.
 
 ---
 
@@ -69,7 +69,3 @@ python -m HalmaNet --client --host 0.0.0.0 --port 5007
 * Até **2 jogadores** + **espectadores ilimitados**.
 * O servidor valida movimentos e distribui mensagens de chat.
 * Partida reinicia apenas quando **ambos** solicitam.
-
----
-
-Quer que eu também monte esse README em **formato markdown pronto para GitHub**, com emojis, badges e blocos de código já estilizados?
