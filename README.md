@@ -30,7 +30,7 @@ sudo apt-get install python3-dev libsdl2-dev libsdl2-image-2.0-0 libsdl2-ttf-2.0
 Abra um terminal e rode:
 
 ```bash
-python halma_net.py --server --host 0.0.0.0 --port 50007
+python -m HalmaNet --server --host 0.0.0.0 --port 5007
 ```
 
 ### 2. Conecte os clientes
@@ -40,13 +40,13 @@ Em outros terminais (ou outros PCs na mesma rede):
 * Jogador 1:
 
 ```bash
-python halma_net.py --client --host 127.0.0.1 --port 50007
+python -m HalmaNet --client --host 0.0.0.0 --port 5007
 ```
 
 * Jogador 2:
 
 ```bash
-python halma_net.py --client --host 127.0.0.1 --port 50007
+python -m HalmaNet --client --host 0.0.0.0 --port 5007
 ```
 
 > Substitua `127.0.0.1` pelo IP do servidor se estiver em máquinas diferentes.
