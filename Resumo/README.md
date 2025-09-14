@@ -2,7 +2,7 @@
 
 ## 🔑 Estrutura geral
 
-![](/visaocomponentes.png)
+![](visaocomponentes.png)
 
 Cada mensagem é um **JSON** com pelo menos a chave `"type"`.
 Exemplo:
@@ -68,7 +68,7 @@ Exemplo:
 
 * **chat**
 
-  ![](/chatbroadcast.png)
+  ![](chatbroadcast.png)
 
   ```json
   {"type":"chat","text":"minha mensagem"}
@@ -88,7 +88,7 @@ Exemplo:
 
 * **reset** (voto para reiniciar a partida; só reinicia se os dois votarem)
 
-  ![](/reinicioconseco.png)
+  ![](reinicioconseco.png)
 
   ```json
   {"type":"reset"}
@@ -96,7 +96,7 @@ Exemplo:
 
 * **resign** (desistência)
 
-  ![](/desistencia.png)
+  ![](desistencia.png)
 
   ```json
   {"type":"resign"}
@@ -104,7 +104,7 @@ Exemplo:
 
 * **ping** (heartbeat automático a cada 10s)
 
-  ![](/fluxojoinheartbeat.png)
+  ![](fluxojoinheartbeat.png)
 
   ```json
   {"type":"ping"}
@@ -114,7 +114,7 @@ Exemplo:
 
 ## 🔄 Cadeia de saltos (jump-lock)
 
-![](/jogadacadeiasaltos.png)
+![](jogadacadeiasaltos.png)
 
 * No Halma, uma peça pode **saltar sobre peças vizinhas** para casas vazias.
 * Após um salto, se houver outro salto possível com a mesma peça, o jogador pode continuar.
@@ -139,7 +139,7 @@ Exemplo:
    * **jump\_lock** é liberado,
    * turno passa para o adversário.
 
-![](/computemoves.png)
+![](computemoves.png)
 
 ---
 
