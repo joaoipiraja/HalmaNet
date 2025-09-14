@@ -24,13 +24,16 @@ sudo apt-get install python3-dev libsdl2-dev libsdl2-image-2.0-0 libsdl2-ttf-2.0
 ---
 
 ## ▶️ Como rodar
+```bash
+cd repositorioDiretorio
+```
 
 ### 1. Inicie o servidor
 
 Abra um terminal e rode:
 
 ```bash
-python -m HalmaNet --server --host 0.0.0.0 --port 5007
+python -m Halma --server --host 0.0.0.0 --port 5007
 ```
 
 ### 2. Conecte os clientes
@@ -40,13 +43,13 @@ Em outros terminais (ou outros PCs na mesma rede):
 * Jogador 1:
 
 ```bash
-python -m HalmaNet --client --host 0.0.0.0 --port 5007
+python -m Halma --client --host 0.0.0.0 --port 5007
 ```
 
 * Jogador 2:
 
 ```bash
-python -m HalmaNet --client --host 0.0.0.0 --port 5007
+python -m Halma --client --host 0.0.0.0 --port 5007
 ```
 
 > Substitua `0.0.0.0` pelo IP do servidor se estiver em máquinas diferentes.
