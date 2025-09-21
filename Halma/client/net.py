@@ -11,11 +11,22 @@ from ..protocol import MsgType
 
 
 class NetClient:
+    """
+    Cliente robusto para o servidor Halma.
+
+    Correções principais:
+    - Envia uma mensagem inicial ("HELLO") imediatamente após conectar,
+      compatível com o servidor que espera handshake (cliente fala primeiro).
+    - Heartbeat envia um PING inicial (sem aguardar o primeiro sleep) e segue
+      com PINGs periódicos para manter a conexão viva.
+    - Fechamento/idempotência de close() e marcação de desconexão preservadas.
+    """
     def __init__(self, host: str, port: int) -> None:
         self.host = host
         self.port = port
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
         # Opções de robustez para a conexão
         try:
             self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
@@ -23,19 +34,25 @@ class NetClient:
         except Exception:
             pass
 
-        # Timeout inicial só para a conexão; depois ajustamos para recv
+        # Timeout apenas para a fase de conexão
         self.sock.settimeout(10.0)
         self.sock.connect((host, port))
-        # Timeout de operação normal (coerente com o servidor)
+
+        # Timeout normal alinhado com o servidor
         self.sock.settimeout(HEARTBEAT_SECONDS * 3)
 
         self.recv_buf = b""
         self.lock = threading.Lock()        # protege inbox e estado de desconexão
-        self.send_lock = threading.Lock()   # serializa envios para evitar interleaving
+        self.send_lock = threading.Lock()   # serializa envios
         self.inbox: List[Dict[str, object]] = []
         self._closed = False
         self._disconnect_posted = False
 
+        # === Handshake: cliente fala primeiro ===
+        # Envia HELLO imediatamente para destravar o handshake do servidor.
+        self._send_hello()
+
+        # Dispara threads de RX e heartbeat
         threading.Thread(target=self._recv_loop, daemon=True).start()
         threading.Thread(target=self._heartbeat_loop, daemon=True).start()
 
@@ -102,10 +119,17 @@ class NetClient:
             self._mark_disconnected()
 
     def _heartbeat_loop(self) -> None:
-        # Envia PING periódico; se falhar, encerra
+        """
+        Envia PING periódico; se falhar, encerra.
+        Manda um PING inicial imediatamente (sem o primeiro sleep) para reduzir
+        o tempo até a primeira mensagem, mesmo já tendo enviado HELLO.
+        """
+        first = True
         while not self._closed:
-            time.sleep(HEARTBEAT_SECONDS)
-            # Se já caiu, para
+            if not first:
+                time.sleep(HEARTBEAT_SECONDS)
+            else:
+                first = False
             if self._closed:
                 break
             ok = self.send({"type": MsgType.PING.value})
@@ -114,6 +138,13 @@ class NetClient:
                 break
 
     # --- utilitários internos ---
+    def _send_hello(self) -> None:
+        """
+        Mensagem de abertura para compatibilidade com servidores que exigem
+        handshake "client-talks-first". Se falhar, a desconexão é marcada.
+        """
+        self.send({"type": "HELLO"})
+
     def _mark_disconnected(self) -> None:
         """Marca desconexão, posta DISCONNECT uma única vez e fecha o socket com segurança."""
         with self.lock:
