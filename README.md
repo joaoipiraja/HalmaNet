@@ -10,13 +10,18 @@ Jogo de *Halma online com chat e multiplayer* usando **Python + sockets + Pygame
 Instalação do pygame:
 
 ```bash
+cd ~/Downloads/IHC/HalmaNet
+
+# create & activate a venv
+python3 -m venv .venv
+source .venv/bin/activate
+
+# upgrade pip and install deps
+python -m pip install --upgrade pip
+# if the project has a requirements file, prefer this:
+# pip install -r requirements.txt
 pip install pygame
-```
 
-No Linux, pode ser necessário instalar dependências do SDL:
-
-```bash
-sudo apt-get install python3-dev libsdl2-dev libsdl2-image-2.0-0 libsdl2-ttf-2.0-0 libsdl2-mixer-2.0-0
 ```
 
 ---
