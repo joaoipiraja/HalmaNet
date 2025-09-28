@@ -10,7 +10,7 @@ Jogo de *Halma online com chat e multiplayer* usando **Python + sockets + Pygame
 Instalação do pygame:
 
 ```bash
-cd ~/Downloads/IHC/HalmaNet
+cd repositorioDiretorio
 
 # create & activate a venv
 python3 -m venv .venv
